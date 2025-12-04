@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dr1yo6t6jff2"]
+[gd_scene load_steps=5 format=3 uid="uid://dr1yo6t6jff2"]
+
+[ext_resource type="PackedScene" uid="uid://b7nhoel41sx0l" path="res://Objects/player.tscn" id="1_a02cp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yp4wr"]
 size = Vector3(50, 1, 50)
@@ -21,3 +23,9 @@ shape = SubResource("BoxShape3D_yp4wr")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 material_override = SubResource("StandardMaterial3D_yp4wr")
 mesh = SubResource("QuadMesh_a02cp")
+
+[node name="Player" parent="." instance=ExtResource("1_a02cp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5.224927, 0)
