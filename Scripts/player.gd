@@ -18,6 +18,9 @@ var maxHp = 50
 @onready var animationPlayer = $AnimationPlayer
 @onready var cooldown = $AttackCooldown
 
+func player():
+	pass
+
 func _ready() -> void:
 	hpBar.max_value = maxHp
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
