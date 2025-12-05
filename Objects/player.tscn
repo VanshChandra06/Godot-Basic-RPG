@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7nhoel41sx0l"]
+[gd_scene load_steps=10 format=3 uid="uid://b7nhoel41sx0l"]
 
 [ext_resource type="Script" uid="uid://ddmulsl4tc8bw" path="res://Scripts/player.gd" id="1_y0qk3"]
 [ext_resource type="PackedScene" uid="uid://c3quluew68e03" path="res://Model/Sword.glb" id="2_3y5cq"]
+[ext_resource type="Texture2D" uid="uid://vxuudwdf7oju" path="res://Sprites/healthbarbacunder.png" id="3_0ad8t"]
+[ext_resource type="Texture2D" uid="uid://d35sg3ia0vayu" path="res://Sprites/healthbarover.png" id="4_x20fu"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yp4wr"]
 radius = 0.4
@@ -95,5 +97,23 @@ transform = Transform3D(0.008583168, 0.0015134454, 0.09961947, 0.017364832, -0.0
 [node name="Sword" parent="Camera3D/SwordPoint" instance=ExtResource("2_3y5cq")]
 
 [node name="AttackCooldown" type="Timer" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HPBar" type="TextureProgressBar" parent="HUD"]
+offset_left = 40.0
+offset_top = 35.0
+offset_right = 279.0
+offset_bottom = 75.0
+texture_under = ExtResource("3_0ad8t")
+texture_progress = ExtResource("4_x20fu")
+
+[node name="GoldLabel" type="Label" parent="HUD"]
+offset_left = 1089.0
+offset_top = 593.0
+offset_right = 1129.0
+offset_bottom = 627.0
+theme_type_variation = &"HeaderMedium"
+text = "0"
 
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

@@ -6,12 +6,20 @@ const JUMP_VELOCITY = 4.5
 
 var sensitivity = 0.001
 var onCooldown = false
+var controller_sensitivity = 2.0
 
+var gold = 15
+var hp = 50
+var maxHp = 50
+
+@onready var hpBar = $HUD/HPBar
+@onready var goldLabel = $HUD/GoldLabel
 @onready var camera = $Camera3D
 @onready var animationPlayer = $AnimationPlayer
 @onready var cooldown = $AttackCooldown
 
 func _ready() -> void:
+	hpBar.max_value = maxHp
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func attack():
@@ -26,8 +34,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotate_x(-event.relative.y * sensitivity)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-60), deg_to_rad(70))
 
+func update_HUD():
+	hpBar.value = hp
+	goldLabel.text = str(gold)
+
+func _controller_look(delta: float) -> void:
+	var look_vector = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	if abs(look_vector.x) > 0.0 or abs(look_vector.y) > 0.0:
+		rotate_y(-look_vector.x * controller_sensitivity * delta)
+		camera.rotate_x(-look_vector.y * controller_sensitivity * delta)
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-60), deg_to_rad(70))
+
+
 func _process(delta: float) -> void:
+	update_HUD()
 	attack()
+	_controller_look(delta)
 	if Input.is_action_just_pressed("escape"):
 		get_tree().quit()
 
