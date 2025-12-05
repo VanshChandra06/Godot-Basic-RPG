@@ -5,10 +5,20 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 var sensitivity = 0.001
+var onCooldown = false
+
 @onready var camera = $Camera3D
+@onready var animationPlayer = $AnimationPlayer
+@onready var cooldown = $AttackCooldown
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func attack():
+	if Input.is_action_just_pressed("attack") and onCooldown == false:
+		animationPlayer.play("SwordSwing")
+		onCooldown = true
+		cooldown.start()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -17,6 +27,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-60), deg_to_rad(70))
 
 func _process(delta: float) -> void:
+	attack()
 	if Input.is_action_just_pressed("escape"):
 		get_tree().quit()
 
@@ -42,3 +53,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_attack_cooldown_timeout() -> void:
+	onCooldown = false
