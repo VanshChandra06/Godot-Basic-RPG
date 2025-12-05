@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dr1yo6t6jff2"]
+[gd_scene load_steps=17 format=3 uid="uid://dr1yo6t6jff2"]
 
 [ext_resource type="ArrayMesh" uid="uid://bd21xojcf66e2" path="res://Model/grass.res" id="1_5v1tr"]
 [ext_resource type="PackedScene" uid="uid://b7nhoel41sx0l" path="res://Objects/player.tscn" id="1_a02cp"]
@@ -21,7 +21,7 @@ size = Vector2(50, 50)
 orientation = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5v1tr"]
-albedo_color = Color(0.20926282, 0.45417964, 0.19562873, 1)
+albedo_color = Color(0.2094256, 0.4833178, 0, 1)
 
 [sub_resource type="MultiMesh" id="MultiMesh_0fj1v"]
 transform_format = 1
@@ -31,6 +31,15 @@ buffer = PackedFloat32Array(-0.83309954, 0, 0.554929, -17.557869, 0, 1.001, 0, 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o06y3"]
 size = Vector3(1, 5, 50)
+
+[sub_resource type="Environment" id="Environment_5v1tr"]
+background_mode = 1
+background_color = Color(0.3810736, 0.8352235, 0.89420116, 1)
+ssao_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.015
 
 [node name="World" type="Node3D"]
 
@@ -53,7 +62,10 @@ multimesh = SubResource("MultiMesh_0fj1v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.828558, 0.9, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5.224927, 0)
+transform = Transform3D(0.94465274, 0.27462447, -0.17947881, 0.19935611, -0.04602753, 0.9788456, 0.26055393, -0.96044934, -0.09822809, 0, 5.224927, 0)
+light_indirect_energy = 2.0
+light_volumetric_fog_energy = 2.0
+shadow_enabled = true
 
 [node name="Tavern" parent="." instance=ExtResource("2_go701")]
 transform = Transform3D(0.88051873, 0, 0.47401136, 0, 1, 0, -0.47401136, 0, 0.88051873, -14.52797, 0.008583084, -12.658567)
@@ -356,3 +368,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4209871, 0, 17.562885)
 
 [node name="Tree9" parent="Trees" instance=ExtResource("8_k7acu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9145284, 0, 6.5155773)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5v1tr")
